@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "977470366354",
+    "project_id": "hiko--photo",
+    "storage_bucket": "hiko--photo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:977470366354:android:42081da604cffa780e3c4b",
+        "android_client_info": {
+          "package_name": "com.example.google_photo_gallery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "977470366354-mnd424j3srokqdh1ok2f8f03dq356f1g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.google_photo_gallery",
+            "certificate_hash": "f43f2bbe358f4a12066b4f17a412ed5bb1571e11"
+          }
+        },
+        {
+          "client_id": "977470366354-2v9o20m3vhh2u2joahbi68lbng57mn3c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuGrFo5iDlYtdSVi4uQYWPVGn1TG7tMJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "977470366354-2v9o20m3vhh2u2joahbi68lbng57mn3c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
