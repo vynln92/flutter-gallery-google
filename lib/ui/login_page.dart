@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_photo_gallery/model/photos_library_api_model.dart';
-import 'package:google_photo_gallery/ui/login/SignInButton.dart';
-import 'package:google_photo_gallery/ui/trip_list_page.dart';
+import 'package:google_photo_gallery/ui/login/signIn_button.dart';
+import 'package:google_photo_gallery/ui/album_list_page.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class LoginPage extends StatelessWidget {
@@ -98,7 +98,7 @@ class LoginPage extends StatelessWidget {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (BuildContext context) => TripListPage(),
+        builder: (BuildContext context) => AlbumListPage(),
       ),
     );
   }
