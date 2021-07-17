@@ -176,10 +176,6 @@ class _AlbumPageState extends State<AlbumPage> {
   Widget _buildMediaItemList(
       BuildContext context, AsyncSnapshot<SearchMediaItemsResponse> snapshot) {
     if (snapshot.hasData) {
-      if (snapshot.data.mediaItems == null) {
-        return Container();
-      }
-
       return CustomScrollView(slivers: [
         SliverAppBar(
           // floating: true,
@@ -225,7 +221,8 @@ class _AlbumPageState extends State<AlbumPage> {
             ),
           ),
         ),
-        _buildImages(snapshot.data.mediaItems),
+        if (snapshot.data.mediaItems != null) _buildImages(snapshot.data.mediaItems),
+
       ]);
     }
 

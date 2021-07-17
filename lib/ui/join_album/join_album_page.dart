@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_photo_gallery/common_widgets/custom_elevated_button.dart';
 import 'package:google_photo_gallery/constants/assets.dart';
 import 'package:google_photo_gallery/model/photos_library_api_model.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -62,7 +63,7 @@ class _JoinAlbumPageState extends State<JoinAlbumPage> {
                       ),
                     ),
                     Center(
-                      child: ElevatedButton(
+                      child: CustomElevatedButton(
                         onPressed: () => _joinAlbum(context),
                         child: const Text('Join Album'),
                       ),
