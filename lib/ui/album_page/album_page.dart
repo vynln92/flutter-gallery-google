@@ -1,12 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_photo_gallery/common_widgets/custom_elevated_button.dart';
+import 'package:google_photo_gallery/constants/assets.dart';
 import 'package:google_photo_gallery/model/photos_library_api_model.dart';
 import 'package:google_photo_gallery/photos_library_api/album.dart';
 import 'package:google_photo_gallery/photos_library_api/media_item.dart';
 import 'package:google_photo_gallery/photos_library_api/search_media_items_response.dart';
 import 'package:google_photo_gallery/ui/components/contribute_photo_dialog.dart';
+import 'package:google_photo_gallery/ui/gallery_page/gallery_page.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class AlbumPage extends StatefulWidget {
@@ -28,11 +31,9 @@ class _AlbumPageState extends State<AlbumPage> {
   Future<SearchMediaItemsResponse> searchResponse;
   bool _inSharingApiCall = false;
 
-
   bool _pinned = true;
   bool _snap = false;
   bool _floating = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -44,61 +45,16 @@ class _AlbumPageState extends State<AlbumPage> {
         ),
         backgroundColor: Colors.orange,
       ),
-      backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   title: Text(album.title ?? '[no title]'),
-      //   elevation: 4,
-      // ),
+      backgroundColor: Colors.grey[200],
       body: _buildBuilderBody(),
     );
   }
 
   Builder _buildBuilderBody() {
     return Builder(builder: (BuildContext context) {
-      return CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            pinned: _pinned,
-            snap: _snap,
-            floating: _floating,
-            expandedHeight: 160.0,
-            flexibleSpace: const FlexibleSpaceBar(
-              title: Text('SliverAppBar'),
-              background: FlutterLogo(),
-            ),
-          ),
-          const SliverToBoxAdapter(
-            child: SizedBox(
-              height: 20,
-              child: Center(
-                child: Text('Scroll to see the SliverAppBar in effect.'),
-              ),
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                return Container(
-                  color: index.isOdd ? Colors.white : Colors.black12,
-                  height: 100.0,
-                  child: Center(
-                    child: Text('$index', textScaleFactor: 5),
-                  ),
-                );
-              },
-              childCount: 20,
-            ),
-          ),
-        ],
-        // child: Column(
-        //   children: <Widget>[
-        //     _buildShareButtons(context),
-        //     FutureBuilder<SearchMediaItemsResponse>(
-        //       future: searchResponse,
-        //       builder: _buildMediaItemList,
-        //     )
-        //   ],
-        // ),
+      return FutureBuilder<SearchMediaItemsResponse>(
+        future: searchResponse,
+        builder: _buildMediaItemList,
       );
     });
   }
@@ -251,14 +207,34 @@ class _AlbumPageState extends State<AlbumPage> {
         return Container();
       }
 
-      return Expanded(
-        child: ListView.builder(
-          itemCount: snapshot.data.mediaItems.length,
-          itemBuilder: (BuildContext context, int index) {
-            return _buildMediaItem(snapshot.data.mediaItems[index]);
-          },
+      return CustomScrollView(slivers: [
+        SliverAppBar(
+          floating: true,
+          expandedHeight: 160.0,
+          leading: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          actions: [
+            Icon(
+              Icons.delete,
+              color: Colors.white,
+            ),
+            SizedBox(width: 12),
+          ],
+          flexibleSpace: FlexibleSpaceBar(
+            title: Text(
+              album.title ?? '[no title]',
+              style: TextStyle(color: Colors.white),
+            ),
+            background: Image.asset(
+              Assets.imgHeaderBackground,
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
-      );
+        _buildImages(snapshot.data.mediaItems),
+      ]);
     }
 
     if (snapshot.hasError) {
@@ -296,6 +272,48 @@ class _AlbumPageState extends State<AlbumPage> {
       ],
     );
   }
+
+  Widget _buildImages(List<MediaItem> mediaItems) => SliverToBoxAdapter(
+        child: GridView.builder(
+          gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          primary: false,
+          shrinkWrap: true,
+          padding: EdgeInsets.all(2),
+          itemCount: mediaItems.length,
+          itemBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: InkWell(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => GalleryPage(
+                    mediaItems: mediaItems,
+                    sendingIndex: index,
+                  ),
+                ),
+              ),
+              child: Hero(
+                tag: _getUrlString(mediaItems, index),
+                child: CachedNetworkImage(
+                  imageUrl: _getUrlString(mediaItems, index),
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      Opacity(
+                    child: Icon(Icons.image, size: 148),
+                    opacity: 0.5,
+                  ),
+                  errorWidget: (BuildContext context, String url, Object error) {
+                    print(error);
+                    return const Icon(Icons.error);
+                  },
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+
+  String _getUrlString(mediaItems, index) => '${mediaItems[index].baseUrl}=w364';
 }
 
 class ContributePhotoResult {

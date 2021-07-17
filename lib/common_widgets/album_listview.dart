@@ -54,8 +54,6 @@ class AlbumListview extends StatelessWidget {
       );
     }
 
-    print('thumbnail --------- ${sharedAlbum.coverPhotoBaseUrl}=w346-h160-c');
-
     return CachedNetworkImage(
       imageUrl: '${sharedAlbum.coverPhotoBaseUrl}=w346-h160-c',
       progressIndicatorBuilder: (context, url, downloadProgress) =>
@@ -66,8 +64,6 @@ class AlbumListview extends StatelessWidget {
       },
     );
   }
-
-
 
   Widget _buildAlbumCard(BuildContext context, Album sharedAlbum,
       PhotosLibraryApiModel photosLibraryApi) {
