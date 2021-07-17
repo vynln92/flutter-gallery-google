@@ -28,6 +28,12 @@ class _AlbumPageState extends State<AlbumPage> {
   Future<SearchMediaItemsResponse> searchResponse;
   bool _inSharingApiCall = false;
 
+
+  bool _pinned = true;
+  bool _snap = false;
+  bool _floating = false;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,22 +45,62 @@ class _AlbumPageState extends State<AlbumPage> {
         backgroundColor: Colors.orange,
       ),
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text(album.title ?? '[no title]'),
-        elevation: 4,
-      ),
-      body: Builder(builder: (BuildContext context) {
-        return Column(
-          children: <Widget>[
-            _buildShareButtons(context),
-            FutureBuilder<SearchMediaItemsResponse>(
-              future: searchResponse,
-              builder: _buildMediaItemList,
-            )
-          ],
-        );
-      }),
+      // appBar: AppBar(
+      //   title: Text(album.title ?? '[no title]'),
+      //   elevation: 4,
+      // ),
+      body: _buildBuilderBody(),
     );
+  }
+
+  Builder _buildBuilderBody() {
+    return Builder(builder: (BuildContext context) {
+      return CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: _pinned,
+            snap: _snap,
+            floating: _floating,
+            expandedHeight: 160.0,
+            flexibleSpace: const FlexibleSpaceBar(
+              title: Text('SliverAppBar'),
+              background: FlutterLogo(),
+            ),
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 20,
+              child: Center(
+                child: Text('Scroll to see the SliverAppBar in effect.'),
+              ),
+            ),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                return Container(
+                  color: index.isOdd ? Colors.white : Colors.black12,
+                  height: 100.0,
+                  child: Center(
+                    child: Text('$index', textScaleFactor: 5),
+                  ),
+                );
+              },
+              childCount: 20,
+            ),
+          ),
+        ],
+        // child: Column(
+        //   children: <Widget>[
+        //     _buildShareButtons(context),
+        //     FutureBuilder<SearchMediaItemsResponse>(
+        //       future: searchResponse,
+        //       builder: _buildMediaItemList,
+        //     )
+        //   ],
+        // ),
+      );
+    });
   }
 
   Future<void> _shareAlbum(BuildContext context) async {
