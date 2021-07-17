@@ -9,7 +9,9 @@ part of 'join_shared_album_response.dart';
 JoinSharedAlbumResponse _$JoinSharedAlbumResponseFromJson(
     Map<String, dynamic> json) {
   return JoinSharedAlbumResponse(
-    json['album'],
+    json['album'] == null
+        ? null
+        : Album.fromJson(json['album'] as Map<String, dynamic>),
   );
 }
 

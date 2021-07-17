@@ -8,7 +8,9 @@ part of 'create_album_request.dart';
 
 CreateAlbumRequest _$CreateAlbumRequestFromJson(Map<String, dynamic> json) {
   return CreateAlbumRequest(
-    json['album'],
+    json['album'] == null
+        ? null
+        : Album.fromJson(json['album'] as Map<String, dynamic>),
   );
 }
 

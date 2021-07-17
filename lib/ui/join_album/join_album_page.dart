@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:google_photo_gallery/common_widgets/custom_elevated_button.dart';
 import 'package:google_photo_gallery/constants/assets.dart';
 import 'package:google_photo_gallery/model/photos_library_api_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class CreateTripPage extends StatefulWidget {
+class JoinAlbumPage extends StatefulWidget {
   @override
-  _CreateTripPageState createState() => _CreateTripPageState();
+  _JoinAlbumPageState createState() => _JoinAlbumPageState();
 }
 
-class _CreateTripPageState extends State<CreateTripPage> {
+class _JoinAlbumPageState extends State<JoinAlbumPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
-  final TextEditingController tripNameFormController = TextEditingController();
+  final TextEditingController shareTokenFormController =
+      TextEditingController();
 
   @override
   void dispose() {
-    tripNameFormController.dispose();
+    shareTokenFormController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Create Album'),),
+      appBar: AppBar(
+        title: Text('Join Album'),
+      ),
       body: Container(
         padding: const EdgeInsets.all(25),
         child: _isLoading
@@ -38,12 +39,14 @@ class _CreateTripPageState extends State<CreateTripPage> {
                     Image.asset(
                       Assets.imgCreateAlbum,
                     ),
-                    SizedBox(height: 120,),
+                    SizedBox(
+                      height: 80,
+                    ),
                     TextFormField(
-                      controller: tripNameFormController,
+                      controller: shareTokenFormController,
                       autocorrect: true,
                       decoration: const InputDecoration(
-                        hintText: 'Album name',
+                        hintText: 'Paste the share token',
                       ),
                     ),
                     Container(
@@ -52,17 +55,16 @@ class _CreateTripPageState extends State<CreateTripPage> {
                         horizontal: 0,
                       ),
                       child: const Text(
-                        'This will create a shared album in your Google Photos'
-                        ' account',
+                        'This will join an album in your Google Photos account',
                         style: TextStyle(
                           color: Colors.grey,
                         ),
                       ),
                     ),
                     Center(
-                      child: CustomElevatedButton(
-                        onPressed: () => _createTrip(context),
-                        child: const Text('Create Trip'),
+                      child: ElevatedButton(
+                        onPressed: () => _joinAlbum(context),
+                        child: const Text('Join Album'),
                       ),
                     ),
                   ],
@@ -72,15 +74,18 @@ class _CreateTripPageState extends State<CreateTripPage> {
     );
   }
 
-  Future<void> _createTrip(BuildContext context) async {
-    // Display the loading indicator.
+  Future<void> _joinAlbum(BuildContext context) async {
+    // Show loading indicator
     setState(() => _isLoading = true);
 
+    // Call the API to join an album with the entered share token
     await ScopedModel.of<PhotosLibraryApiModel>(context)
-        .createAlbum(tripNameFormController.text);
+        .joinSharedAlbum(shareTokenFormController.text);
 
-    // Hide the loading indicator.
+    // Hide loading indicator
     setState(() => _isLoading = false);
+
+    // Return to the previous screen
     Navigator.pop(context);
   }
 }

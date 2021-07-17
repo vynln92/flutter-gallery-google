@@ -8,7 +8,9 @@ part of 'share_album_response.dart';
 
 ShareAlbumResponse _$ShareAlbumResponseFromJson(Map<String, dynamic> json) {
   return ShareAlbumResponse(
-    json['shareInfo'],
+    json['shareInfo'] == null
+        ? null
+        : ShareInfo.fromJson(json['shareInfo'] as Map<String, dynamic>),
   );
 }
 

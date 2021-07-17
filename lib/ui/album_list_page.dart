@@ -8,8 +8,8 @@ import 'package:google_photo_gallery/photos_library_api/album.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'components/main_app_bar.dart';
-import 'create_album/create_trip_page.dart';
-import 'join_album/join_trip_page.dart';
+import 'create_album/create_album_page.dart';
+import 'join_album/join_album_page.dart';
 
 class AlbumListPage extends StatelessWidget {
   @override
@@ -17,11 +17,11 @@ class AlbumListPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: MainAppBar(),
-      body: _buildTripList(),
+      body: _buildAlbumList(),
     );
   }
 
-  Widget _buildTripList() {
+  Widget _buildAlbumList() {
     return ScopedModelDescendant<PhotosLibraryApiModel>(
       builder: (BuildContext context, Widget child,
           PhotosLibraryApiModel photosLibraryApi) {
@@ -93,7 +93,7 @@ class AlbumListPage extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Container(
-              child: _buildTripThumbnail(sharedAlbum),
+              child: _buildAlbumThumbnail(sharedAlbum),
             ),
             Container(
               height: 52,
@@ -117,7 +117,7 @@ class AlbumListPage extends StatelessWidget {
     );
   }
 
-  Widget _buildTripThumbnail(Album sharedAlbum) {
+  Widget _buildAlbumThumbnail(Album sharedAlbum) {
     if (sharedAlbum.coverPhotoBaseUrl == null ||
         sharedAlbum.mediaItemsCount == null) {
       return Container(
@@ -160,7 +160,7 @@ class AlbumListPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (BuildContext context) => CreateTripPage(),
+                  builder: (BuildContext context) => CreateAlbumPage(),
                 ),
               );
             },
@@ -171,7 +171,7 @@ class AlbumListPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (BuildContext context) => JoinTripPage(),
+                  builder: (BuildContext context) => JoinAlbumPage(),
                 ),
               );
             },

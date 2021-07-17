@@ -22,69 +22,6 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _buildBody() {
-    return ScopedModelDescendant<PhotosLibraryApiModel>(
-      builder:
-          (BuildContext context, Widget child, PhotosLibraryApiModel apiModel) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FaIcon(FontAwesomeIcons.google),
-            Container(
-              padding: const EdgeInsets.all(30),
-              child: const Text(
-                'Trips from Field Trippa will be stored as shared albums in '
-                'Google Photos',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontWeight: FontWeight.w500, color: Color(0x99000000)),
-              ),
-            ),
-            Container(
-              child: OutlinedButton(
-                onPressed: () async {
-                  try {
-                    await apiModel.signIn() != null
-                        ? _navigateToTripList(context)
-                        : _showSignInError(context);
-                  } on Exception catch (error) {
-                    print(error);
-                    _showSignInError(context);
-                  }
-                },
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.orange),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0))),
-                ),
-                child: RichText(
-                  text: TextSpan(
-                    children: [
-                      WidgetSpan(
-                        child: FaIcon(
-                          FontAwesomeIcons.google,
-                          size: 18,
-                          color: Colors.white,
-                        ),
-                      ),
-                      TextSpan(
-                          text: " Connect with Google Photos",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16)),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   void _showSignInError(BuildContext context) {
     const snackBar = SnackBar(
       duration: Duration(seconds: 3),
@@ -94,7 +31,7 @@ class LoginPage extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  void _navigateToTripList(BuildContext context) {
+  void _navigateToAlbumList(BuildContext context) {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -176,7 +113,7 @@ class LoginPage extends StatelessWidget {
   Future _showSignInGoogle(context, apiModel) async {
     try {
       await apiModel.signIn() != null
-          ? _navigateToTripList(context)
+          ? _navigateToAlbumList(context)
           : _showSignInError(context);
     } on Exception catch (error) {
       print(error);
