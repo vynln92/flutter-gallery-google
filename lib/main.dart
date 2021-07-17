@@ -37,17 +37,17 @@ ThemeData _buildTheme() {
     primaryIconTheme: const IconThemeData(
       color: Colors.grey,
     ),
-    accentColor: Colors.green[800],
+    accentColor: Colors.orange[800],
     textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-      primary: Colors.green[800], // foreground
+      primary: Colors.orange[800], // foreground
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4),
       ),
     )),
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-      primary: Colors.green[800],
+      primary: Colors.orange[800],
     )),
     scaffoldBackgroundColor: Colors.white,
   );

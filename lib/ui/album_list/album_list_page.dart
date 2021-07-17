@@ -36,7 +36,7 @@ class AlbumListPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               SvgPicture.asset(
-                Assets.icGallery,
+                Assets.icGallerySvg,
                 height: 148,
               ),
               Container(

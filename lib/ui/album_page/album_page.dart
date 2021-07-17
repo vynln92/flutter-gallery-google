@@ -9,8 +9,8 @@ import 'package:google_photo_gallery/photos_library_api/search_media_items_respo
 import 'package:google_photo_gallery/ui/components/contribute_photo_dialog.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class TripPage extends StatefulWidget {
-  const TripPage({Key key, this.searchResponse, this.album}) : super(key: key);
+class AlbumPage extends StatefulWidget {
+  const AlbumPage({Key key, this.searchResponse, this.album}) : super(key: key);
 
   final Future<SearchMediaItemsResponse> searchResponse;
 
@@ -18,11 +18,11 @@ class TripPage extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() =>
-      _TripPageState(searchResponse: searchResponse, album: album);
+      _AlbumPageState(searchResponse: searchResponse, album: album);
 }
 
-class _TripPageState extends State<TripPage> {
-  _TripPageState({this.searchResponse, this.album});
+class _AlbumPageState extends State<AlbumPage> {
+  _AlbumPageState({this.searchResponse, this.album});
 
   Album album;
   Future<SearchMediaItemsResponse> searchResponse;
@@ -31,31 +31,22 @@ class _TripPageState extends State<TripPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _contributePhoto(context),
+        child: Icon(
+          Icons.file_upload,
+        ),
+        backgroundColor: Colors.orange,
+      ),
       backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 0,
+        title: Text(album.title ?? '[no title]'),
+        elevation: 4,
       ),
       body: Builder(builder: (BuildContext context) {
         return Column(
           children: <Widget>[
-            Container(
-              width: 370,
-              child: Text(
-                album.title ?? '[no title]',
-                style: const TextStyle(
-                  fontSize: 36,
-                ),
-              ),
-            ),
             _buildShareButtons(context),
-            Container(
-              width: 348,
-              margin: const EdgeInsets.only(bottom: 32),
-              child: CustomElevatedButton(
-                child: const Text('ADD PHOTO'),
-                onPressed: () => _contributePhoto(context),
-              ),
-            ),
             FutureBuilder<SearchMediaItemsResponse>(
               future: searchResponse,
               builder: _buildMediaItemList,

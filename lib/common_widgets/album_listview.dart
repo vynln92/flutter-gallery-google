@@ -2,9 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_photo_gallery/common_widgets/create_album_button_container.dart';
+import 'package:google_photo_gallery/constants/assets.dart';
 import 'package:google_photo_gallery/model/photos_library_api_model.dart';
 import 'package:google_photo_gallery/photos_library_api/album.dart';
-import 'package:google_photo_gallery/ui/album_page/trip_page.dart';
+import 'package:google_photo_gallery/ui/album_page/album_page.dart';
 
 class AlbumListview extends StatelessWidget {
   const AlbumListview({Key key, this.length, this.photosLibraryApi, }) : super(key: key);
@@ -48,11 +49,12 @@ class AlbumListview extends StatelessWidget {
         color: Colors.grey[200],
         padding: const EdgeInsets.all(5),
         child: SvgPicture.asset(
-          'assets/ic_fieldTrippa.svg',
-          color: Colors.grey[350],
+          Assets.icGallerySvg,
         ),
       );
     }
+
+    print('thumbnail --------- ${sharedAlbum.coverPhotoBaseUrl}=w346-h160-c');
 
     return CachedNetworkImage(
       imageUrl: '${sharedAlbum.coverPhotoBaseUrl}=w346-h160-c',
@@ -73,7 +75,7 @@ class AlbumListview extends StatelessWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
-      elevation: 3,
+      elevation: 4,
       clipBehavior: Clip.antiAlias,
       margin: const EdgeInsets.symmetric(
         vertical: 12,
@@ -83,7 +85,7 @@ class AlbumListview extends StatelessWidget {
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (BuildContext context) => TripPage(
+            builder: (BuildContext context) => AlbumPage(
               album: sharedAlbum,
               searchResponse: photosLibraryApi.searchMediaItems(sharedAlbum.id),
             ),

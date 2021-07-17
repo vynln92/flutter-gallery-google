@@ -18,7 +18,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
               Container(
                 padding: const EdgeInsets.only(right: 8),
                 child: SvgPicture.asset(
-                  Assets.icGallery,
+                  Assets.icGallerySvg,
                   excludeFromSemantics: true,
                   width: 28,
                 ),

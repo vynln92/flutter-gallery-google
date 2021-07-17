@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_photo_gallery/model/photos_library_api_model.dart';
-import 'package:google_photo_gallery/ui/album_page/trip_page.dart';
+import 'package:google_photo_gallery/ui/album_page/album_page.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -106,22 +106,39 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
     return Container(
       padding: const EdgeInsets.all(12),
       child: TextButton.icon(
-        onPressed: () => _getImage(context),
+        onPressed: () => _getImageGallery(context),
+        // onPressed: () => _getImageCamera(context),
         label: const Text('UPLOAD PHOTO'),
         icon: const Icon(Icons.file_upload),
       ),
     );
   }
 
-  Future _getImage(BuildContext context) async {
+  Future _getImageCamera(BuildContext context) async {
     // Use the image_picker package to prompt the user for a photo from their
     // device.
-    final pickedImage = await _imagePicker
-        .getImage(
-          source: ImageSource.camera,
-        );
-    final pickedFile = File(pickedImage.path);
+    final pickedImage = await _imagePicker.getImage(
+      source: ImageSource.camera,
+    );
+    if (pickedImage != null) {
+      final pickedFile = File(pickedImage.path);
+      _setStateForPickedImage(pickedFile);
+    }
+  }
 
+  Future _getImageGallery(BuildContext context) async {
+    PickedFile pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      File imageFile = File(pickedFile.path);
+      _setStateForPickedImage(imageFile);
+    }
+  }
+
+  Future _setStateForPickedImage(File pickedFile) async {
     // Store the image that was selected.
     setState(() {
       _image = pickedFile;
