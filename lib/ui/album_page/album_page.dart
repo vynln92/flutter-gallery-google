@@ -31,10 +31,6 @@ class _AlbumPageState extends State<AlbumPage> {
   Future<SearchMediaItemsResponse> searchResponse;
   bool _inSharingApiCall = false;
 
-  bool _pinned = true;
-  bool _snap = false;
-  bool _floating = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -177,29 +173,6 @@ class _AlbumPageState extends State<AlbumPage> {
     });
   }
 
-  Widget _buildShareButtons(BuildContext context) {
-    if (_inSharingApiCall) {
-      return const CircularProgressIndicator();
-    }
-
-    return Column(children: <Widget>[
-      Container(
-        width: 254,
-        child: TextButton(
-          onPressed: () => _showShareableUrl(context),
-          child: const Text('SHARE WITH ANYONE'),
-        ),
-      ),
-      Container(
-        width: 254,
-        child: TextButton(
-          onPressed: () => _showShareToken(context),
-          child: const Text('SHARE IN FIELD TRIPPA'),
-        ),
-      ),
-    ]);
-  }
-
   Widget _buildMediaItemList(
       BuildContext context, AsyncSnapshot<SearchMediaItemsResponse> snapshot) {
     if (snapshot.hasData) {
@@ -209,16 +182,32 @@ class _AlbumPageState extends State<AlbumPage> {
 
       return CustomScrollView(slivers: [
         SliverAppBar(
-          floating: true,
+          // floating: true,
+          pinned: true,
           expandedHeight: 160.0,
-          leading: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
+          backgroundColor: Colors.orange,
+          leading: InkWell(
+            onTap: () => Navigator.pop(context),
+            child: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
           ),
           actions: [
-            Icon(
-              Icons.delete,
-              color: Colors.white,
+            InkWell(
+              onTap: () => _showShareableUrl(context),
+              child: Icon(
+                Icons.link,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(width: 12),
+            InkWell(
+              onTap: () => _showShareToken(context),
+              child: Icon(
+                Icons.share,
+                color: Colors.white,
+              ),
             ),
             SizedBox(width: 12),
           ],
@@ -227,9 +216,12 @@ class _AlbumPageState extends State<AlbumPage> {
               album.title ?? '[no title]',
               style: TextStyle(color: Colors.white),
             ),
-            background: Image.asset(
-              Assets.imgHeaderBackground,
-              fit: BoxFit.cover,
+            background: ColorFiltered(
+              colorFilter: ColorFilter.mode(Colors.grey, BlendMode.modulate),
+              child: Image.asset(
+                Assets.imgHeaderBackground,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
@@ -244,32 +236,6 @@ class _AlbumPageState extends State<AlbumPage> {
 
     return const Center(
       child: CircularProgressIndicator(),
-    );
-  }
-
-  Widget _buildMediaItem(MediaItem mediaItem) {
-    return Column(
-      children: <Widget>[
-        Center(
-          child: CachedNetworkImage(
-            imageUrl: '${mediaItem.baseUrl}=w364',
-            progressIndicatorBuilder: (context, url, downloadProgress) =>
-                CircularProgressIndicator(value: downloadProgress.progress),
-            errorWidget: (BuildContext context, String url, Object error) {
-              print(error);
-              return const Icon(Icons.error);
-            },
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 2),
-          width: 364,
-          child: Text(
-            mediaItem.description ?? '',
-            textAlign: TextAlign.left,
-          ),
-        ),
-      ],
     );
   }
 

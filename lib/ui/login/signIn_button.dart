@@ -27,6 +27,6 @@ class SignInButton extends CustomElevatedButton {
                 Text('')
               ],
             ),
-            color: color,
+            backgroundColor: color,
             onPressed: onPressed);
 }

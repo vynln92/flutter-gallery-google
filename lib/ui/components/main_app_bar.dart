@@ -25,7 +25,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               Text(
                 'Hiko Flutter Test',
-                style: TextStyle(color: Colors.green[800]),
+                style: TextStyle(color: Colors.orange),
               ),
             ],
           ),

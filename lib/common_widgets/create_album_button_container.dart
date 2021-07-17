@@ -18,9 +18,9 @@ class CreateAlbumButton extends StatelessWidget {
           CustomElevatedButton(
             child: Text(
               "CREATE YOUR ALBUM",
-              style: TextStyle(color: Colors.black87),
+              style: TextStyle(color: Colors.white),
             ),
-            color: Colors.white,
+            backgroundColor: Colors.orange,
             onPressed: () {
               Navigator.push(
                 context,
