@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_photo_gallery/common_widgets/circular_progress.dart';
 import 'package:google_photo_gallery/model/photos_library_api_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -11,7 +12,18 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<PhotosLibraryApiModel>(
       builder: (context, child, apiModel) {
-        return apiModel.isLoggedIn() ? AlbumListPage() : LoginPage();
+        return FutureBuilder(
+          future: apiModel.signIn(),
+          builder: (context, snapshot) {
+            switch(snapshot.connectionState) {
+              case ConnectionState.none:
+              case ConnectionState.waiting:
+                return CircularProgress();
+              default:
+                return apiModel.isLoggedIn() ? AlbumListPage() : LoginPage();
+            }
+
+        },);
       },
     );
   }
