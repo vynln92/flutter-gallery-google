@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_photo_gallery/generated/l10n.dart';
 import 'package:google_photo_gallery/model/photos_library_api_model.dart';
 import 'package:google_photo_gallery/ui/album_page/album_page.dart';
 import 'package:image_picker/image_picker.dart';
@@ -34,8 +35,8 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
                 _buildUploadButton(context),
                 TextFormField(
                   controller: descriptionController,
-                  decoration: const InputDecoration(
-                      labelText: 'Add a description',
+                  decoration: InputDecoration(
+                      labelText: S.current.add_description,
                       labelStyle: TextStyle(
                         color: Colors.black,
                       )),
@@ -55,17 +56,16 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
   ElevatedButton _buildAddButton(BuildContext context) {
     if (_image == null) {
       // No image has been selected yet
-      return const ElevatedButton(
+      return ElevatedButton(
         onPressed: null,
-        child: Text('ADD'),
+        child: Text(S.current.add),
       );
     }
 
     if (_uploadToken == null) {
-      // Upload has not completed yet
-      return const ElevatedButton(
+      return ElevatedButton(
         onPressed: null,
-        child: Text('Waiting for image upload'),
+        child: Text(S.current.wait_for_upload),
       );
     }
 
@@ -78,7 +78,7 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
           descriptionController.text,
         ),
       ),
-      child: const Text('ADD'),
+      child: Text(S.current.add),
     );
   }
 
@@ -100,15 +100,11 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
       );
     }
 
-    // TODO(developer): Implement error display
-
-    // No image has been selected yet
     return Container(
       padding: const EdgeInsets.all(12),
       child: TextButton.icon(
         onPressed: () => _getImageGallery(context),
-        // onPressed: () => _getImageCamera(context),
-        label: const Text('UPLOAD PHOTO'),
+        label: Text(S.current.upload_photo),
         icon: const Icon(Icons.file_upload),
       ),
     );
@@ -139,20 +135,15 @@ class _ContributePhotoDialogState extends State<ContributePhotoDialog> {
   }
 
   Future _setStateForPickedImage(File pickedFile) async {
-    // Store the image that was selected.
     setState(() {
       _image = pickedFile;
       _isUploading = true;
     });
 
-    // Make a request to upload the image to Google Photos once it was selected.
     final uploadToken = await ScopedModel.of<PhotosLibraryApiModel>(context)
         .uploadMediaItem(pickedFile);
 
     setState(() {
-      // Once the upload process has completed, store the upload token.
-      // This token is used together with the description to create the media
-      // item later.
       _uploadToken = uploadToken;
       _isUploading = false;
     });

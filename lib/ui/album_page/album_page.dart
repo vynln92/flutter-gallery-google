@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_photo_gallery/common_widgets/custom_elevated_button.dart';
 import 'package:google_photo_gallery/constants/assets.dart';
 import 'package:google_photo_gallery/generated/l10n.dart';
 import 'package:google_photo_gallery/model/photos_library_api_model.dart';
@@ -106,11 +105,8 @@ class _AlbumPageState extends State<AlbumPage> {
   }
 
   void _showUrlDialog(BuildContext context) {
-
     _showShareDialog(
-        context,
-        S.current.share_this_url,
-        album.shareInfo.shareableUrl);
+        context, S.current.share_this_url, album.shareInfo.shareableUrl);
   }
 
   void _showShareDialog(BuildContext context, String title, String text) {
@@ -174,30 +170,22 @@ class _AlbumPageState extends State<AlbumPage> {
           pinned: true,
           expandedHeight: 160.0,
           backgroundColor: Colors.orange,
-          leading: InkWell(
-            onTap: () => Navigator.pop(context),
-            child: Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            ),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () => Navigator.pop(context),
           ),
           actions: [
-            InkWell(
-              onTap: () => _showShareableUrl(context),
-              child: Icon(
-                Icons.link,
-                color: Colors.white,
-              ),
+            IconButton(
+              icon: Icon(Icons.link),
+              color: Colors.white,
+              onPressed: () => _showShareableUrl(context),
             ),
-            SizedBox(width: 12),
-            InkWell(
-              onTap: () => _showShareToken(context),
-              child: Icon(
-                Icons.share,
-                color: Colors.white,
-              ),
+            IconButton(
+              icon: Icon(Icons.share),
+              color: Colors.white,
+              onPressed: () => _showShareToken(context),
             ),
-            SizedBox(width: 12),
           ],
           flexibleSpace: FlexibleSpaceBar(
             title: Text(
@@ -213,8 +201,8 @@ class _AlbumPageState extends State<AlbumPage> {
             ),
           ),
         ),
-        if (snapshot.data.mediaItems != null) _buildImages(snapshot.data.mediaItems),
-
+        if (snapshot.data.mediaItems != null)
+          _buildImages(snapshot.data.mediaItems),
       ]);
     }
 
@@ -251,13 +239,15 @@ class _AlbumPageState extends State<AlbumPage> {
               child: Hero(
                 tag: _getUrlString(mediaItems, index),
                 child: CachedNetworkImage(
+                  fit: BoxFit.cover,
                   imageUrl: _getUrlString(mediaItems, index),
                   progressIndicatorBuilder: (context, url, downloadProgress) =>
                       Opacity(
                     child: Icon(Icons.image, size: 148),
                     opacity: 0.5,
                   ),
-                  errorWidget: (BuildContext context, String url, Object error) {
+                  errorWidget:
+                      (BuildContext context, String url, Object error) {
                     print(error);
                     return const Icon(Icons.error);
                   },
@@ -268,7 +258,8 @@ class _AlbumPageState extends State<AlbumPage> {
         ),
       );
 
-  String _getUrlString(mediaItems, index) => '${mediaItems[index].baseUrl}=w364';
+  String _getUrlString(mediaItems, index) =>
+      '${mediaItems[index].baseUrl}=w364';
 }
 
 class ContributePhotoResult {

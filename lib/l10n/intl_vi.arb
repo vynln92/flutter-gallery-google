@@ -21,6 +21,9 @@
   "copy" : "Copy",
   "close" : "Đóng",
   "no_title" : "[no title]",
-  "you_not_member" : "Bạn không phải thành viên của bất kỳ Album nào.\nTạo album của bạn ngay, hoặc tham gia Album bằng mã Token được chia sẻ."
-
+  "you_not_member" : "Bạn không phải thành viên của bất kỳ Album nào.\nTạo album của bạn ngay, hoặc tham gia Album bằng mã Token được chia sẻ.",
+  "add" : "Thêm",
+  "wait_for_upload" : "Đợi đăng tải ảnh",
+  "upload_photo" : "Đăng tải ảnh",
+  "add_description" : "Thêm mô tả"
 }

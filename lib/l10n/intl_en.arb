@@ -21,6 +21,10 @@
   "copy" : "Copy",
   "close" : "Close",
   "no_title" : "[no title]",
-  "you_not_member" : "You're not currently a member of any albums.\nCreate a your album or join an existing one below."
+  "you_not_member" : "You're not currently a member of any albums.\nCreate a your album or join an existing one below.",
+  "add" : "Ađ",
+  "wait_for_upload" : "Waiting for image upload",
+  "upload_photo" : "Upload Photo",
+  "add_description" : "Add a description"
 
 }

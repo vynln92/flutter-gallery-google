@@ -28,20 +28,30 @@ class _GalleryPage extends State<GalleryPage> {
   void initState() {
     super.initState();
     _currentPageValue = sendingIndex.toDouble();
-    _pageController = PageController(viewportFraction: 0.8, initialPage: sendingIndex)
-      ..addListener(
-        () {
-          setState(() {
-            _currentPageValue = _pageController.page;
-          });
-        },
-      );
+    _pageController =
+        PageController(viewportFraction: 0.8, initialPage: sendingIndex)
+          ..addListener(
+            () {
+              setState(() {
+                _currentPageValue = _pageController.page;
+              });
+            },
+          );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () => Navigator.pop(context),
+        ),
+        elevation: 0,
+      ),
       body: Stack(
         children: [
           Container(

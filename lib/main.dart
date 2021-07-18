@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      title: S.of(context).app_name,
+      title: 'Hiko Flutter Test',
       theme: _theme,
       home: HomePage(),
     );

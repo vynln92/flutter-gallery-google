@@ -33,28 +33,32 @@ class AlbumListPage extends StatelessWidget {
         }
 
         if (photosLibraryApi.albums.isEmpty) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              SvgPicture.asset(
-                Assets.icGallerySvg,
-                height: 148,
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  S.current.you_not_member,
-                  style: TextStyle(color: Colors.grey[600], fontSize: 16),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              CreateAlbumButton()
-            ],
-          );
+          return _buildAlbumEmpty();
         }
 
         return AlbumListview(length: photosLibraryApi.albums.length + 1, photosLibraryApi: photosLibraryApi,);
       },
     );
+  }
+
+  Column _buildAlbumEmpty() {
+    return Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            SvgPicture.asset(
+              Assets.icGallerySvg,
+              height: 148,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                S.current.you_not_member,
+                style: TextStyle(color: Colors.grey[600], fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            CreateAlbumButton()
+          ],
+        );
   }
 }

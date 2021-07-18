@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_photo_gallery/constants/assets.dart';
 import 'package:google_photo_gallery/generated/l10n.dart';
 import 'package:google_photo_gallery/model/photos_library_api_model.dart';
 import 'package:google_photo_gallery/ui/login/signIn_button.dart';
@@ -83,7 +84,7 @@ class LoginPage extends StatelessWidget {
                 text: S.current.sign_in_with_google,
                 textColor: Colors.black87,
                 color: Colors.white,
-                assetImageSVG: 'assets/icons/ic_google.svg',
+                assetImageSVG: Assets.icGoogleSvg,
                 onPressed: () => _showSignInGoogle(context, apiModel),
               ),
               SizedBox(
