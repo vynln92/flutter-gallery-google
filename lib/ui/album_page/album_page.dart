@@ -56,7 +56,6 @@ class _AlbumPageState extends State<AlbumPage> {
   }
 
   Future<void> _shareAlbum(BuildContext context) async {
-    // Show the loading indicator
     setState(() => _inSharingApiCall = true);
 
     var snackBar = SnackBar(
@@ -65,36 +64,21 @@ class _AlbumPageState extends State<AlbumPage> {
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-    // Share the album and update the local model
     await ScopedModel.of<PhotosLibraryApiModel>(context).shareAlbum(album.id);
     final updatedAlbum =
         await ScopedModel.of<PhotosLibraryApiModel>(context).getAlbum(album.id);
 
     setState(() {
       album = updatedAlbum;
-      // Hide the loading indicator
       _inSharingApiCall = false;
     });
   }
 
-  Future<void> _showShareableUrl(BuildContext context) async {
-    if (album.shareInfo == null || album.shareInfo.shareableUrl == null) {
-      // Album is not shared yet, share it first, then display dialog
-      await _shareAlbum(context);
-      _showUrlDialog(context);
-    } else {
-      // Album is already shared, display dialog with URL
-      _showUrlDialog(context);
-    }
-  }
-
   Future<void> _showShareToken(BuildContext context) async {
     if (album.shareInfo == null) {
-      // Album is not shared yet, share it first, then display dialog
       await _shareAlbum(context);
       _showTokenDialog(context);
     } else {
-      // Album is already shared, display dialog with token
       _showTokenDialog(context);
     }
   }
@@ -104,9 +88,37 @@ class _AlbumPageState extends State<AlbumPage> {
         context, S.current.use_this_token, album.shareInfo.shareToken);
   }
 
-  void _showUrlDialog(BuildContext context) {
-    _showShareDialog(
-        context, S.current.share_this_url, album.shareInfo.shareableUrl);
+  void _showDeleteConfirmation(BuildContext context, String mediaId) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Delete confirmation'),
+            content: Row(
+              children: [
+                Flexible(
+                  child: Text(
+                    'Do you want to delete this picture?',
+                  ),
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(S.current.close),
+              ),
+              TextButton(
+                onPressed: () {
+                  _deleteMedia(context, mediaId);
+                },
+                child: Text('Okay'),
+              ),
+            ],
+          );
+        });
   }
 
   void _showShareDialog(BuildContext context, String title, String text) {
@@ -141,7 +153,6 @@ class _AlbumPageState extends State<AlbumPage> {
   }
 
   void _contributePhoto(BuildContext context) async {
-    // Show the contribute  dialog and upload a photo.
     final contributeResult = await showDialog<ContributePhotoResult>(
       context: context,
       builder: (BuildContext context) {
@@ -149,11 +160,9 @@ class _AlbumPageState extends State<AlbumPage> {
       },
     );
 
-    // Create the media item from the uploaded photo.
     await ScopedModel.of<PhotosLibraryApiModel>(context).createMediaItem(
         contributeResult.uploadToken, album.id, contributeResult.description);
 
-    // Do a new search for items inside this album and store its Future for display.
     final response = ScopedModel.of<PhotosLibraryApiModel>(context)
         .searchMediaItems(album.id);
     setState(() {
@@ -166,7 +175,6 @@ class _AlbumPageState extends State<AlbumPage> {
     if (snapshot.hasData) {
       return CustomScrollView(slivers: [
         SliverAppBar(
-          // floating: true,
           pinned: true,
           expandedHeight: 160.0,
           backgroundColor: Colors.orange,
@@ -176,11 +184,6 @@ class _AlbumPageState extends State<AlbumPage> {
             onPressed: () => Navigator.pop(context),
           ),
           actions: [
-            IconButton(
-              icon: Icon(Icons.link),
-              color: Colors.white,
-              onPressed: () => _showShareableUrl(context),
-            ),
             IconButton(
               icon: Icon(Icons.share),
               color: Colors.white,
@@ -227,6 +230,8 @@ class _AlbumPageState extends State<AlbumPage> {
           itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.all(2.0),
             child: InkWell(
+              onLongPress: () =>
+                  _showDeleteConfirmation(context, mediaItems[index].id),
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -260,6 +265,27 @@ class _AlbumPageState extends State<AlbumPage> {
 
   String _getUrlString(mediaItems, index) =>
       '${mediaItems[index].baseUrl}=w364';
+
+  Future<void> _deleteMedia(BuildContext context, String mediaId) async {
+    List<String> mediaIds = List.generate(1, (index) => mediaId);
+    final result = await ScopedModel.of<PhotosLibraryApiModel>(context)
+        .deleteMedia(album.id, mediaIds);
+
+    if (result) {
+      final response = ScopedModel.of<PhotosLibraryApiModel>(context)
+          .searchMediaItems(album.id);
+      setState(() {
+        searchResponse = response;
+      });
+    } else {
+      var snackBar = SnackBar(
+        duration: Duration(seconds: 3),
+        content: Text(S.current.could_not_sign_in_error),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+    Navigator.pop(context);
+  }
 }
 
 class ContributePhotoResult {

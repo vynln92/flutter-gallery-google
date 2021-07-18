@@ -15,15 +15,18 @@ class HomePage extends StatelessWidget {
         return FutureBuilder(
           future: apiModel.signIn(),
           builder: (context, snapshot) {
-            switch(snapshot.connectionState) {
+            switch (snapshot.connectionState) {
               case ConnectionState.none:
               case ConnectionState.waiting:
-                return CircularProgress();
+                return Container(
+                  decoration: BoxDecoration(color: Colors.white),
+                  child: CircularProgress(),
+                );
               default:
                 return apiModel.isLoggedIn() ? AlbumListPage() : LoginPage();
             }
-
-        },);
+          },
+        );
       },
     );
   }

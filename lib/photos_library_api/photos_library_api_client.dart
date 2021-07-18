@@ -52,6 +52,22 @@ class PhotosLibraryApiClient {
     return Album.fromJson(jsonDecode(response.body));
   }
 
+  Future<bool> deleteMedia(String albumId, List<String> mediaIds) async {
+    Map<String, dynamic> request = <String, dynamic>{
+      'mediaItemIds': mediaIds
+    };
+
+    final response = await http.post(
+      Uri.parse('https://photoslibrary.googleapis.com/v1/albums/${albumId}:batchRemoveMediaItems'),
+      body: jsonEncode(request),
+      headers: await _authHeaders,
+    );
+
+    printError(response);
+
+    return response.statusCode == 200;
+  }
+
   Future<JoinSharedAlbumResponse> joinSharedAlbum(
       JoinSharedAlbumRequest request) async {
     final response = await http.post(

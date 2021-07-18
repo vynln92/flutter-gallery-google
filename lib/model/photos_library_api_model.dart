@@ -68,6 +68,12 @@ class PhotosLibraryApiModel extends Model {
     return album;
   }
 
+  Future<bool> deleteMedia(String albumId, List<String> mediaIds) async {
+    final success = await client.deleteMedia(albumId, mediaIds);
+    updateAlbums();
+    return success;
+  }
+
   Future<Album> getAlbum(String id) async =>
       client.getAlbum(GetAlbumRequest.defaultOptions(id));
 
@@ -122,13 +128,6 @@ class PhotosLibraryApiModel extends Model {
       return;
     }
 
-    // Add albums from the user's Google Photos account
-    // var ownedAlbums = await _loadAlbums();
-    // if (ownedAlbums != null) {
-    //   _albums.addAll(ownedAlbums);
-    // }
-
-    // Load albums from owned and shared albums
     final list = await Future.wait([_loadSharedAlbums(), _loadAlbums()]);
 
     _albums.addAll(list.expand((a) => a ?? []));
