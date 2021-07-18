@@ -8,6 +8,7 @@ import 'package:google_photo_gallery/model/photos_library_api_model.dart';
 import 'package:google_photo_gallery/photos_library_api/album.dart';
 import 'package:google_photo_gallery/photos_library_api/media_item.dart';
 import 'package:google_photo_gallery/photos_library_api/search_media_items_response.dart';
+import 'package:google_photo_gallery/ui/album_page/dialog_factory.dart';
 import 'package:google_photo_gallery/ui/components/contribute_photo_dialog.dart';
 import 'package:google_photo_gallery/ui/gallery_page/gallery_page.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -86,39 +87,6 @@ class _AlbumPageState extends State<AlbumPage> {
   void _showTokenDialog(BuildContext context) {
     _showShareDialog(
         context, S.current.use_this_token, album.shareInfo.shareToken);
-  }
-
-  void _showDeleteConfirmation(BuildContext context, String mediaId) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Delete confirmation'),
-            content: Row(
-              children: [
-                Flexible(
-                  child: Text(
-                    'Do you want to delete this picture?',
-                  ),
-                ),
-              ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text(S.current.close),
-              ),
-              TextButton(
-                onPressed: () {
-                  _deleteMedia(context, mediaId);
-                },
-                child: Text('Okay'),
-              ),
-            ],
-          );
-        });
   }
 
   void _showShareDialog(BuildContext context, String title, String text) {
@@ -231,7 +199,9 @@ class _AlbumPageState extends State<AlbumPage> {
             padding: const EdgeInsets.all(2.0),
             child: InkWell(
               onLongPress: () =>
-                  _showDeleteConfirmation(context, mediaItems[index].id),
+                  DialogFactory.showDeleteConfirmation(context, album, mediaItems[index].id, () => {
+                    _deleteMedia(context, mediaItems[index].id)
+                  }),
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(

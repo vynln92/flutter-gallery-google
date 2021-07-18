@@ -12,21 +12,24 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<PhotosLibraryApiModel>(
       builder: (context, child, apiModel) {
-        return FutureBuilder(
-          future: apiModel.signIn(),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
-              case ConnectionState.waiting:
-                return Container(
-                  decoration: BoxDecoration(color: Colors.white),
-                  child: CircularProgress(),
-                );
-              default:
-                return apiModel.isLoggedIn() ? AlbumListPage() : LoginPage();
-            }
-          },
-        );
+        return apiModel.isLoggedIn() ? AlbumListPage() : LoginPage();
+
+        // TODO: Will enhence for first time using app.
+        // return FutureBuilder(
+        //   future: apiModel.signIn(),
+        //   builder: (context, snapshot) {
+        //     switch (snapshot.connectionState) {
+        //       case ConnectionState.none:
+        //       case ConnectionState.waiting:
+        //         return Container(
+        //           decoration: BoxDecoration(color: Colors.white),
+        //           child: CircularProgress(),
+        //         );
+        //       default:
+        //
+        //     }
+        //   },
+        // );
       },
     );
   }
