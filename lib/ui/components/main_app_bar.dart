@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_photo_gallery/constants/assets.dart';
+import 'package:google_photo_gallery/generated/l10n.dart';
 import 'package:google_photo_gallery/model/photos_library_api_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import '../login_page.dart';
+import '../login/login_page.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -24,7 +25,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
               Text(
-                'Hiko Flutter Test',
+                S.current.app_name,
                 style: TextStyle(color: Colors.orange),
               ),
             ],
@@ -88,9 +89,9 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           },
           itemBuilder: (BuildContext context) {
             return <PopupMenuEntry<_AppBarOverflowOptions>>[
-              const PopupMenuItem<_AppBarOverflowOptions>(
+              PopupMenuItem<_AppBarOverflowOptions>(
                 value: _AppBarOverflowOptions.signout,
-                child: Text('Disconnect from Google Photos'),
+                child: Text(S.current.disconnect_google),
               )
             ];
           },

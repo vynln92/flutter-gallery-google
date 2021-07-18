@@ -4,6 +4,7 @@ import 'package:google_photo_gallery/common_widgets/album_listview.dart';
 import 'package:google_photo_gallery/common_widgets/create_album_button_container.dart';
 import 'package:google_photo_gallery/common_widgets/custom_elevated_button.dart';
 import 'package:google_photo_gallery/constants/assets.dart';
+import 'package:google_photo_gallery/generated/l10n.dart';
 import 'package:google_photo_gallery/model/photos_library_api_model.dart';
 import 'package:google_photo_gallery/ui/create_album/create_album_page.dart';
 import 'package:google_photo_gallery/ui/join_album/join_album_page.dart';
@@ -42,8 +43,7 @@ class AlbumListPage extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                  "You're not currently a member of any albums."
-                  '\nCreate a your album or join an existing one below.',
+                  S.current.you_not_member,
                   style: TextStyle(color: Colors.grey[600], fontSize: 16),
                   textAlign: TextAlign.center,
                 ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_photo_gallery/common_widgets/custom_elevated_button.dart';
 import 'package:google_photo_gallery/constants/assets.dart';
+import 'package:google_photo_gallery/generated/l10n.dart';
 import 'package:google_photo_gallery/model/photos_library_api_model.dart';
 import 'package:google_photo_gallery/photos_library_api/album.dart';
 import 'package:google_photo_gallery/photos_library_api/media_item.dart';
@@ -59,9 +60,9 @@ class _AlbumPageState extends State<AlbumPage> {
     // Show the loading indicator
     setState(() => _inSharingApiCall = true);
 
-    const snackBar = SnackBar(
+    var snackBar = SnackBar(
       duration: Duration(seconds: 3),
-      content: Text('Sharing Album...'),
+      content: Text(S.current.sharing_album),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
@@ -70,7 +71,6 @@ class _AlbumPageState extends State<AlbumPage> {
     final updatedAlbum =
         await ScopedModel.of<PhotosLibraryApiModel>(context).getAlbum(album.id);
 
-    print('Album has been shared.');
     setState(() {
       album = updatedAlbum;
       // Hide the loading indicator
@@ -80,8 +80,6 @@ class _AlbumPageState extends State<AlbumPage> {
 
   Future<void> _showShareableUrl(BuildContext context) async {
     if (album.shareInfo == null || album.shareInfo.shareableUrl == null) {
-      print('Not shared, sharing album first.');
-
       // Album is not shared yet, share it first, then display dialog
       await _shareAlbum(context);
       _showUrlDialog(context);
@@ -93,8 +91,6 @@ class _AlbumPageState extends State<AlbumPage> {
 
   Future<void> _showShareToken(BuildContext context) async {
     if (album.shareInfo == null) {
-      print('Not shared, sharing album first.');
-
       // Album is not shared yet, share it first, then display dialog
       await _shareAlbum(context);
       _showTokenDialog(context);
@@ -105,19 +101,15 @@ class _AlbumPageState extends State<AlbumPage> {
   }
 
   void _showTokenDialog(BuildContext context) {
-    print('This is the shareToken:\n${album.shareInfo.shareToken}');
-
     _showShareDialog(
-        context, 'Use this token to share', album.shareInfo.shareToken);
+        context, S.current.use_this_token, album.shareInfo.shareToken);
   }
 
   void _showUrlDialog(BuildContext context) {
-    print('This is the shareableUrl:\n${album.shareInfo.shareableUrl}');
 
     _showShareDialog(
         context,
-        'Share this URL with anyone. '
-        'Anyone with this URL can access all items.',
+        S.current.share_this_url,
         album.shareInfo.shareableUrl);
   }
 
@@ -136,7 +128,7 @@ class _AlbumPageState extends State<AlbumPage> {
                 ),
                 TextButton(
                   onPressed: () => Clipboard.setData(ClipboardData(text: text)),
-                  child: const Text('Copy'),
+                  child: Text(S.current.copy),
                 )
               ],
             ),
@@ -145,7 +137,7 @@ class _AlbumPageState extends State<AlbumPage> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('Close'),
+                child: Text(S.current.close),
               ),
             ],
           );
@@ -209,7 +201,7 @@ class _AlbumPageState extends State<AlbumPage> {
           ],
           flexibleSpace: FlexibleSpaceBar(
             title: Text(
-              album.title ?? '[no title]',
+              album.title ?? S.current.no_title,
               style: TextStyle(color: Colors.white),
             ),
             background: ColorFiltered(

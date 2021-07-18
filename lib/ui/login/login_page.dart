@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_photo_gallery/generated/l10n.dart';
 import 'package:google_photo_gallery/model/photos_library_api_model.dart';
 import 'package:google_photo_gallery/ui/login/signIn_button.dart';
 import 'package:google_photo_gallery/ui/album_list/album_list_page.dart';
@@ -23,10 +24,9 @@ class LoginPage extends StatelessWidget {
   }
 
   void _showSignInError(BuildContext context) {
-    const snackBar = SnackBar(
+    var snackBar = SnackBar(
       duration: Duration(seconds: 3),
-      content: Text('Could not sign in.\n'
-          'Is the Google Services file missing?'),
+      content: Text(S.current.could_not_sign_in_error),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -61,12 +61,12 @@ class LoginPage extends StatelessWidget {
                 height: 80,
               ),
               Text(
-                'Sign In',
+                S.current.sign_in,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
               ),
               Text(
-                'Sign in to explore your wonderful pictures',
+                S.current.sign_in_to_explore,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 16,
@@ -80,7 +80,7 @@ class LoginPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SignInButton(
-                text: "Sign in with Google",
+                text: S.current.sign_in_with_google,
                 textColor: Colors.black87,
                 color: Colors.white,
                 assetImageSVG: 'assets/icons/ic_google.svg',
@@ -90,10 +90,7 @@ class LoginPage extends StatelessWidget {
                 height: 16,
               ),
               Text(
-                'The build is under debug version, and tester must be provided in Firebase console.'
-                '\nIf your email haven\'t provided, you can have a quick test with the account below:'
-                '\n\nEmail: atumgameon@gmail.com'
-                '\nPassword: Atumg1243',
+                S.current.login_info,
                 textAlign: TextAlign.left,
                 style: TextStyle(
                     fontSize: 16,

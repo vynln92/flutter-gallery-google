@@ -23,7 +23,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_localizations:
+    sdk: flutter
+  flutter_cupertino_localizations: ^1.0.1
 
   cupertino_icons: ^1.0.2
 
@@ -52,3 +54,5 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+flutter_intl:
+  enabled: true

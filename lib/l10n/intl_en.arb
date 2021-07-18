@@ -1,0 +1,26 @@
+{
+  "app_name": "Hiko Flutter Test",
+  "could_not_sign_in_error" : "Could not sign in.\nTester email must be provided in Google console?",
+  "sign_in" : "Sign In",
+  "sign_in_to_explore" : "Sign in to explore your wonderful pictures",
+  "sign_in_with_google" : "Sign in with Google",
+  "login_info" : "The build is under debug version, and tester must be provided in Firebase console.\nIf your email haven't provided, you can have a quick test with the account below:\n\nEmail: atumgameon@gmail.com\nPassword: Atumg1243",
+
+  "join_album" : "Join Album",
+  "paste_token" : "Paste the share token",
+  "this_will_join" : "This will join an album in your Google Photos account",
+
+  "description" : "Description:",
+  "create_album" : "Create Album:",
+  "album_name" : "Album name",
+  "this_will_create" : "This will create a shared album in your Google Photos account",
+  "disconnect_google" : "Disconnect from Google Photos",
+  "sharing_album" : "Sharing Album...",
+  "use_this_token" : "Use this token to share",
+  "share_this_url" : "Share this URL with anyone.\nAnyone with this URL can access all items.",
+  "copy" : "Copy",
+  "close" : "Close",
+  "no_title" : "[no title]",
+  "you_not_member" : "You're not currently a member of any albums.\nCreate a your album or join an existing one below."
+
+}

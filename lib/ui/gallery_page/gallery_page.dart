@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:google_photo_gallery/generated/l10n.dart';
 import 'package:google_photo_gallery/photos_library_api/media_item.dart';
 
 class GalleryPage extends StatefulWidget {
@@ -101,7 +102,7 @@ class _GalleryPage extends State<GalleryPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Description:',
+                                  S.current.description,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,

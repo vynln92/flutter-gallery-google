@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_photo_gallery/common_widgets/custom_elevated_button.dart';
 import 'package:google_photo_gallery/constants/assets.dart';
+import 'package:google_photo_gallery/generated/l10n.dart';
 import 'package:google_photo_gallery/model/photos_library_api_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -25,7 +26,7 @@ class _JoinAlbumPageState extends State<JoinAlbumPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Join Album'),
+        title: Text(S.current.join_album),
       ),
       body: Container(
         padding: const EdgeInsets.all(25),
@@ -46,8 +47,8 @@ class _JoinAlbumPageState extends State<JoinAlbumPage> {
                     TextFormField(
                       controller: shareTokenFormController,
                       autocorrect: true,
-                      decoration: const InputDecoration(
-                        hintText: 'Paste the share token',
+                      decoration: InputDecoration(
+                        hintText: S.current.paste_token,
                       ),
                     ),
                     Container(
@@ -55,8 +56,8 @@ class _JoinAlbumPageState extends State<JoinAlbumPage> {
                         vertical: 15,
                         horizontal: 0,
                       ),
-                      child: const Text(
-                        'This will join an album in your Google Photos account',
+                      child: Text(
+                        S.current.this_will_join,
                         style: TextStyle(
                           color: Colors.grey,
                         ),
@@ -65,7 +66,7 @@ class _JoinAlbumPageState extends State<JoinAlbumPage> {
                     Center(
                       child: CustomElevatedButton(
                         onPressed: () => _joinAlbum(context),
-                        child: const Text('Join Album'),
+                        child: Text(S.current.join_album),
                       ),
                     ),
                   ],

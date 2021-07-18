@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_photo_gallery/ui/home_page.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+import 'generated/l10n.dart';
 import 'model/photos_library_api_model.dart';
 
 void main() {
@@ -21,7 +23,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Hiko Flutter Test',
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
+      title: S.of(context).app_name,
       theme: _theme,
       home: HomePage(),
     );

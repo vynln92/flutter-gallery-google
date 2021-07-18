@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_photo_gallery/common_widgets/custom_elevated_button.dart';
 import 'package:google_photo_gallery/constants/assets.dart';
+import 'package:google_photo_gallery/generated/l10n.dart';
 import 'package:google_photo_gallery/model/photos_library_api_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -24,7 +25,7 @@ class _CreateAlbumPageState extends State<CreateAlbumPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Create Album'),),
+      appBar: AppBar(title: Text(S.current.create_album),),
       body: Container(
         padding: const EdgeInsets.all(25),
         child: _isLoading
@@ -42,8 +43,8 @@ class _CreateAlbumPageState extends State<CreateAlbumPage> {
                     TextFormField(
                       controller: albumNameFormController,
                       autocorrect: true,
-                      decoration: const InputDecoration(
-                        hintText: 'Album name',
+                      decoration: InputDecoration(
+                        hintText: S.current.album_name,
                       ),
                     ),
                     Container(
@@ -51,9 +52,8 @@ class _CreateAlbumPageState extends State<CreateAlbumPage> {
                         vertical: 15,
                         horizontal: 0,
                       ),
-                      child: const Text(
-                        'This will create a shared album in your Google Photos'
-                        ' account',
+                      child: Text(
+                        S.current.this_will_create,
                         style: TextStyle(
                           color: Colors.grey,
                         ),
@@ -62,7 +62,7 @@ class _CreateAlbumPageState extends State<CreateAlbumPage> {
                     Center(
                       child: CustomElevatedButton(
                         onPressed: () => _createAlbum(context),
-                        child: const Text('Create Album'),
+                        child: Text(S.current.create_album),
                       ),
                     ),
                   ],

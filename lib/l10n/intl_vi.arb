@@ -1,0 +1,26 @@
+{
+  "app_name": "Hiko Flutter Test",
+  "could_not_sign_in_error" : "Lỗi không thể đăng nhập.\nTester email chưa được cung cấp trong Firebase console?",
+  "sign_in" : "Đăng nhập",
+  "sign_in_to_explore" : "Google Photos giúp bạn xem và lưu trữ những bức hình của bạn và bạn bè",
+  "sign_in_with_google" : "Đăng nhập với Google",
+  "login_info" : "Bản build thuộc phiên bản debug, tester phải được cung cấp tại Firebase console.\n Nếu email của bạn chưa được cung cấp, bạn có test nhanh với tài khoản dưới:\n\nEmail: atumgameon@gmail.com\nPassword: Atumg1243",
+
+  "join_album" : "Tham gia Album",
+  "paste_token" : "Dán mã Token",
+  "this_will_join" : "Bạn sẽ tham gia Album này trong Google Photos của bạn",
+
+  "description" : "Mô tả:",
+  "create_album" : "Tạo Album:",
+  "album_name" : "Tên Album",
+  "this_will_create" : "Album của bạn sẽ được chia sẻ tại Google Photos",
+  "disconnect_google" : "Hủy kết nối với Google Photos",
+  "sharing_album" : "Chia sẻ Album...",
+  "use_this_token" : "Sử dụng mã Token để chia sẻ",
+  "share_this_url" : "Chia sẻ đường dẫn với mọi người.\nNgười có đường dẫn sẽ truy cập được vào thư mục hình ảnh này.",
+  "copy" : "Copy",
+  "close" : "Đóng",
+  "no_title" : "[no title]",
+  "you_not_member" : "Bạn không phải thành viên của bất kỳ Album nào.\nTạo album của bạn ngay, hoặc tham gia Album bằng mã Token được chia sẻ."
+
+}
